@@ -18,14 +18,19 @@ public class DayValidator implements Validator {
 
             case MONDAY:
                 validateRestrictionDay(DayRestriction.MONDAY, lastDigit);
+                break;
             case TUESDAY:
                 validateRestrictionDay(DayRestriction.TUESDAY, lastDigit);
+                break;
             case WEDNESDAY:
                 validateRestrictionDay(DayRestriction.WEDNESDAY, lastDigit);
+                break;
             case THURSDAY:
                 validateRestrictionDay(DayRestriction.THURSDAY, lastDigit);
+                break;
             case FRIDAY:
                 validateRestrictionDay(DayRestriction.FRIDAY, lastDigit);
+                break;
             default:
                 throw new ValidationException("Does not have pico y placa");
         }

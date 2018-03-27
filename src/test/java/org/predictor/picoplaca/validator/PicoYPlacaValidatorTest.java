@@ -14,14 +14,15 @@ public class PicoYPlacaValidatorTest {
     @Test
     public void hasPicoYPlacaTest() {
         try {
-            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4542", "26/03/2018", "08:00");
+            PicoYPlacaBuilder builder = PicoYPlacaBuilder.getINSTANCE();
+            PicoYPlaca picoYPlaca = builder.build("PTY-4542", "26/03/2018", "08:00");
 //            boolean hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4542", "26/03/2018", "08:00");
             assertNotNull(picoYPlaca);
-            picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4541", "26/03/2018", "19:30");
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "19:30");
             assertNotNull(picoYPlaca);
-            picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4541", "26/03/2018", "09:30");
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "09:30");
             assertNotNull(picoYPlaca);
-            picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4541", "26/03/2018", "07:00");
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "07:00");
             assertNotNull(picoYPlaca);
         } catch (ValidationException e) {
             fail(e.getMessage());
@@ -32,16 +33,17 @@ public class PicoYPlacaValidatorTest {
     @Test
     public void doesNotHavePicoYPlacaTest() {
         try {
-            boolean hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4543", "26/03/2018", "08:00");
-            assertFalse(hasPicoyPlaca);
-            hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4541", "27/03/2018", "19:30");
-            assertFalse(hasPicoyPlaca);
-            hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4541", "26/03/2018", "09:31");
-            assertFalse(hasPicoyPlaca);
-            hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4541", "26/03/2018", "06:59");
-            assertFalse(hasPicoyPlaca);
-            hasPicoyPlaca = picoYPlacaValidator.validate("PTY-4541", "26/03/2018", "11:00");
-            assertFalse(hasPicoyPlaca);
+            PicoYPlacaBuilder builder = PicoYPlacaBuilder.getINSTANCE();
+            PicoYPlaca picoYPlaca = builder.build("PTY-4543", "26/03/2018", "08:00");
+            assertNotNull(picoYPlaca);
+            picoYPlaca = builder.build("PTY-4541", "27/03/2018", "19:30");
+            assertNotNull(picoYPlaca);
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "09:31");
+            assertNotNull(picoYPlaca);
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "06:59");
+            assertNotNull(picoYPlaca);
+            picoYPlaca = builder.build("PTY-4541", "26/03/2018", "11:00");
+            assertNotNull(picoYPlaca);
         } catch (ValidationException e) {
             fail(e.getMessage());
         }
@@ -50,20 +52,21 @@ public class PicoYPlacaValidatorTest {
 
     @Test
     public void invalidLicensePlateTest() {
+        PicoYPlacaBuilder builder = PicoYPlacaBuilder.getINSTANCE();
         try {
-            picoYPlacaValidator.validate("asdf", "26/03/2018", "08:00");
+            builder.build("asdf", "26/03/2018", "08:00");
             fail();
         } catch (ValidationException e) {
             assertTrue(e.getMessage().contains("Invalid license plate"));
         }
         try {
-            picoYPlacaValidator.validate("PTY-4541-1", "26/03/2018", "08:00");
+            builder.build("PTY-4541-1", "26/03/2018", "08:00");
             fail();
         } catch (ValidationException e) {
             assertTrue(e.getMessage().contains("Invalid license plate"));
         }
         try {
-            picoYPlacaValidator.validate("PTY4541", "26/03/2018", "08:00");
+            builder.build("PTY4541", "26/03/2018", "08:00");
             fail();
         } catch (ValidationException e) {
             assertTrue(e.getMessage().contains("Invalid license plate"));
@@ -72,8 +75,9 @@ public class PicoYPlacaValidatorTest {
 
     @Test
     public void invalidDateTest() {
+        PicoYPlacaBuilder builder = PicoYPlacaBuilder.getINSTANCE();
         try {
-            picoYPlacaValidator.validate("PTY-4541", "26032018", "08:00");
+            builder.build("PTY-4541", "26032018", "08:00");
             fail();
         } catch (ValidationException e) {
             assertTrue(e.getMessage().contains("Invalid date"));
@@ -82,8 +86,9 @@ public class PicoYPlacaValidatorTest {
 
     @Test
     public void invalidTimeTest() {
+        PicoYPlacaBuilder builder = PicoYPlacaBuilder.getINSTANCE();
         try {
-            picoYPlacaValidator.validate("PTY-4541", "26/03/2018", "88:88");
+            builder.build("PTY-4541", "26/03/2018", "88:88");
             fail();
         } catch (ValidationException e) {
             assertTrue(e.getMessage().contains("Invalid time"));
