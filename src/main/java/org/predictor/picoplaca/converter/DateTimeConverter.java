@@ -9,11 +9,17 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+/**
+ * Singleton class that converts strings to {@code LocalDate} and {@code LocalTime} objects.
+ *
+ * @author martin
+ */
 public class DateTimeConverter {
 
     private Properties properties = PropertiesLoader.getProperties();
 
-    private DateTimeConverter(){}
+    private DateTimeConverter() {
+    }
 
     private static final DateTimeConverter INSTANCE = new DateTimeConverter();
 
@@ -24,7 +30,7 @@ public class DateTimeConverter {
      * @return A successfully converted {@code LocalDate} object
      * @throws ConvertionException in case the conversion fails
      */
-    public LocalDate convertDate(String date) throws ConvertionException {
+    public LocalDate convertToDate(String date) throws ConvertionException {
         try {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(properties.getProperty("format.date"));
             return LocalDate.parse(date, dateFormat);
@@ -42,7 +48,7 @@ public class DateTimeConverter {
      * @return A successfully converted {@code LocalTime} object
      * @throws ConvertionException in case the conversion fails
      */
-    public LocalTime convertTime(String time) throws ConvertionException {
+    public LocalTime convertToTime(String time) throws ConvertionException {
         try {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(properties.getProperty("format.time"));
             return LocalTime.parse(time, dateFormat);

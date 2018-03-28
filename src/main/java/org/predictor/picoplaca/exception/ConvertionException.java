@@ -1,7 +1,7 @@
 package org.predictor.picoplaca.exception;
 
 /**
- * Custom class for exception handling
+ * Custom class for exception handling in converters
  *
  * @author martin
  */

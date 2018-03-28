@@ -2,6 +2,11 @@ package org.predictor.picoplaca.util;
 
 import java.time.LocalTime;
 
+/**
+ * Class that represents the restricted time ranges of pico y placa
+ *
+ * @author martin
+ */
 public enum TimeRestriction {
     MORNING_START(7, 0),
     MORNING_FINISH(9, 30),

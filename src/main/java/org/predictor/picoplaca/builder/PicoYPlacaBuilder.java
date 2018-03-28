@@ -4,14 +4,12 @@ import org.predictor.picoplaca.converter.DateTimeConverter;
 import org.predictor.picoplaca.exception.ConvertionException;
 import org.predictor.picoplaca.exception.ValidationException;
 import org.predictor.picoplaca.model.PicoYPlaca;
-import org.predictor.picoplaca.util.PropertiesLoader;
 import org.predictor.picoplaca.validator.Validator;
-import org.predictor.picoplaca.validator.ValidatorFactory;
+import org.predictor.picoplaca.validator.Validators;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Singleton that creates and validates a {@code PicoYPlaca} object
@@ -32,11 +30,9 @@ public class PicoYPlacaBuilder {
      */
     private static final PicoYPlacaBuilder INSTANCE = new PicoYPlacaBuilder();
 
-    private Properties properties = PropertiesLoader.getProperties();
-
     /**
      * Builds a {@code PicoYPlaca} object from 3 {@code String} objects: license plate, date and time.
-     * They are validated, so that the {@code PicoYPlaca} object is correctly built.
+     * Then it is validated to ensure the {@code PicoYPlaca} object is correctly built.
      *
      * @param licensePlate The license plate to be validated
      * @param date         The date in format dd/MM/yyyy
@@ -45,21 +41,14 @@ public class PicoYPlacaBuilder {
      * @throws ValidationException in case a validation did not pass
      */
     public PicoYPlaca build(String licensePlate, String date, String time) throws ValidationException {
-//        boolean valid = validateLicensePlate(licensePlate);
-//        if (!valid) {
-//            throw new ValidationException(properties.getProperty("message.invalid.license.plate"));
-//        }
         try {
             DateTimeConverter converter = DateTimeConverter.getINSTANCE();
-            LocalDate localDate = converter.convertDate(date);
-            LocalTime localTime = converter.convertTime(time);
+            LocalDate localDate = converter.convertToDate(date);
+            LocalTime localTime = converter.convertToTime(time);
 
             PicoYPlaca picoYPlaca = new PicoYPlaca(licensePlate, localDate, localTime);
+            validate(picoYPlaca);
 
-            List<Validator> validators = ValidatorFactory.getINSTANCE().getValidators();
-            for (Validator validator : validators) {
-                validator.validate(picoYPlaca);
-            }
             return new PicoYPlaca(licensePlate, localDate, localTime);
         } catch (ConvertionException e) {
             throw new ValidationException(e.getMessage());
@@ -67,13 +56,16 @@ public class PicoYPlacaBuilder {
     }
 
     /**
-     * Validates a license plate number against a regular expression
+     * Validates that a {@code PicoYPlaca} object is correctly built
      *
-     * @param licensePlate The license plate number to be validated
-     * @return true if valid, false otherwise
+     * @param picoYPlaca The object to be validated
+     * @throws ValidationException if validation fails
      */
-    private boolean validateLicensePlate(String licensePlate) {
-        return licensePlate.matches(properties.getProperty("regex.license.plate"));
+    private void validate(PicoYPlaca picoYPlaca) throws ValidationException {
+        List<Validator> validators = Validators.get();
+        for (Validator validator : validators) {
+            validator.validate(picoYPlaca);
+        }
     }
 
     /**

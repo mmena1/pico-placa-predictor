@@ -9,8 +9,6 @@ import static org.junit.Assert.*;
 
 public class PicoYPlacaValidatorTest {
 
-    private PicoYPlacaValidator picoYPlacaValidator = PicoYPlacaValidator.getINSTANCE();
-
     @Test
     public void hasPicoYPlacaTest() {
         try {
