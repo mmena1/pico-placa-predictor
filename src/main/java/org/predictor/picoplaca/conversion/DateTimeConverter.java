@@ -1,13 +1,12 @@
-package org.predictor.picoplaca.converter;
+package org.predictor.picoplaca.conversion;
 
-import org.predictor.picoplaca.exception.ConvertionException;
+import org.predictor.picoplaca.builder.PicoYPlacaMessageBuilder;
+import org.predictor.picoplaca.exception.ConversionException;
 import org.predictor.picoplaca.util.PropertiesLoader;
 
-import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
 
 /**
  * Singleton class that converts strings to {@code LocalDate} and {@code LocalTime} objects.
@@ -15,8 +14,6 @@ import java.util.Properties;
  * @author martin
  */
 public class DateTimeConverter {
-
-    private Properties properties = PropertiesLoader.getProperties();
 
     private DateTimeConverter() {
     }
@@ -28,15 +25,14 @@ public class DateTimeConverter {
      *
      * @param date The date to be converted
      * @return A successfully converted {@code LocalDate} object
-     * @throws ConvertionException in case the conversion fails
+     * @throws ConversionException in case the conversion fails
      */
-    public LocalDate convertToDate(String date) throws ConvertionException {
+    public LocalDate convertToDate(String date) throws ConversionException {
         try {
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(properties.getProperty("format.date"));
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(PropertiesLoader.getProperties().getProperty("format.date"));
             return LocalDate.parse(date, dateFormat);
         } catch (Exception e) {
-            String message = MessageFormat.format(properties.getProperty("message.invalid.date"), properties.getProperty("format.date"));
-            throw new ConvertionException(message);
+            throw new ConversionException(PicoYPlacaMessageBuilder.getINSTANCE().invalidDate());
         }
 
     }
@@ -46,15 +42,14 @@ public class DateTimeConverter {
      *
      * @param time The time to be converted
      * @return A successfully converted {@code LocalTime} object
-     * @throws ConvertionException in case the conversion fails
+     * @throws ConversionException in case the conversion fails
      */
-    public LocalTime convertToTime(String time) throws ConvertionException {
+    public LocalTime convertToTime(String time) throws ConversionException {
         try {
-            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(properties.getProperty("format.time"));
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(PropertiesLoader.getProperties().getProperty("format.time"));
             return LocalTime.parse(time, dateFormat);
         } catch (Exception e) {
-            String message = MessageFormat.format(properties.getProperty("message.invalid.time"), properties.getProperty("format.time"));
-            throw new ConvertionException(message);
+            throw new ConversionException(PicoYPlacaMessageBuilder.getINSTANCE().invalidTime());
         }
 
     }

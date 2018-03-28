@@ -5,8 +5,8 @@ package org.predictor.picoplaca.exception;
  *
  * @author martin
  */
-public class ConvertionException extends Exception {
-    public ConvertionException(String message) {
+public class ConversionException extends Exception {
+    public ConversionException(String message) {
         super(message);
     }
 }

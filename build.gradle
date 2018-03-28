@@ -15,11 +15,17 @@ plugins {
 }
 
 // Define the main class for the application
-mainClassName = 'App'
+mainClassName = 'org.predictor.picoplaca.main.App'
 
 dependencies {
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.predictor.picoplaca.main.App'
+    }
 }
 
 // In this section you declare where to find the dependencies of your project
