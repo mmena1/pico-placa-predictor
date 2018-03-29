@@ -19,6 +19,6 @@ The license PSD-1231 has pico y placa on 26/03/2018 at 08:00.
 ```
 Because the last digit of the license plate number is 1 and 26/03/2018 is Monday, means that license plate number is not allowed to circulate on the road between 07:00 and 09:30 and between 16:00 and 19:30.
 
-The proper format for the license plate number  is 3 letters followed by `-` and 3 or 4 numbers, e.g. PCI-458, TGH-0184. The date format is dd/MM/yyyy and the time is a 24-hour format HH:mm. The program will detect any input which doesn't comply with these formats and will throw a corresponding message.
+The proper format for the license plate number is 3 letters (not case sensitive) followed by `-` and 3 or 4 numbers, e.g. PCI-458, tgh-0184. The date format is dd/MM/yyyy and the time is a 24-hour format HH:mm. The program will detect any input which doesn't comply with these formats and will throw a corresponding message.
 
 There is a summary report of the executed tests inside the directory `build/reports/test`. Just open the index.html in any browser and that's it.

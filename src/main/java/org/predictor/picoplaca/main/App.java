@@ -3,6 +3,7 @@ package org.predictor.picoplaca.main;
 import org.predictor.picoplaca.builder.PicoYPlacaBuilder;
 import org.predictor.picoplaca.builder.PicoYPlacaMessageBuilder;
 import org.predictor.picoplaca.exception.ConversionException;
+import org.predictor.picoplaca.exception.ValidationException;
 import org.predictor.picoplaca.model.PicoYPlaca;
 import org.predictor.picoplaca.validation.Validators;
 
@@ -21,15 +22,10 @@ public class App {
                 System.err.println("Please provide exactly 3 arguments: A license plate number, a date and a time.");
                 return;
             }
-            List<String> messages = new ArrayList<>();
-            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build(args[0], args[1], args[2], messages);
-            if (picoYPlaca == null) {
-                messages.forEach(System.out::println);
-                return;
-            }
+            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build(args[0], args[1], args[2]);
             Validators.validate(picoYPlaca);
             System.out.println(PicoYPlacaMessageBuilder.getINSTANCE().hasPicoYPlaca(picoYPlaca));
-        } catch (Exception e) {
+        } catch (ConversionException | ValidationException e) {
             System.out.println(e.getMessage());
         }
     }

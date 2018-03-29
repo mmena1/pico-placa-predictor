@@ -3,6 +3,7 @@ package org.predictor.picoplaca.validation;
 import org.junit.Assert;
 import org.junit.Test;
 import org.predictor.picoplaca.builder.PicoYPlacaBuilder;
+import org.predictor.picoplaca.exception.ConversionException;
 import org.predictor.picoplaca.exception.ValidationException;
 import org.predictor.picoplaca.model.PicoYPlaca;
 
@@ -19,11 +20,9 @@ public class DayValidatorTest {
     public void successTest() {
         try {
             DayValidator dayValidator = new DayValidator();
-            List<String> messages = new ArrayList<>();
-            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4542", "26/03/2018", "08:00", messages);
-            assertThat(messages.isEmpty(), is(true));
+            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4542", "26/03/2018", "08:00");
             dayValidator.validate(picoYPlaca);
-        } catch (ValidationException e) {
+        } catch (ConversionException | ValidationException e) {
             Assert.fail();
         }
     }
@@ -32,14 +31,14 @@ public class DayValidatorTest {
     public void failTest() {
         try {
             DayValidator dayValidator = new DayValidator();
-            List<String> messages = new ArrayList<>();
-            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4542", "27/03/2018", "08:00", messages);
-            assertThat(messages.isEmpty(), is(true));
+            PicoYPlaca picoYPlaca = PicoYPlacaBuilder.getINSTANCE().build("PTY-4542", "27/03/2018", "08:00");
             dayValidator.validate(picoYPlaca);
             Assert.fail();
         } catch (ValidationException e) {
-            String messsage = "The license {0} does not have pico y placa on {1} at {2}.";
+            String messsage = "The license number {0} does not have pico y placa on {1} at {2}.";
             assertThat(e.getMessage(), containsString(MessageFormat.format(messsage, "PTY-4542", "27/03/2018", "08:00")));
+        } catch (ConversionException e) {
+            Assert.fail();
         }
     }
 }

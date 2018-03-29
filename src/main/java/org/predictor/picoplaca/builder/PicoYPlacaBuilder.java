@@ -7,8 +7,6 @@ import org.predictor.picoplaca.util.PropertiesLoader;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Singleton class that creates a {@code PicoYPlaca} object
@@ -35,33 +33,18 @@ public class PicoYPlacaBuilder {
      * @param licensePlate The license plate to be validated
      * @param date         The date in format dd/MM/yyyy
      * @param time         The time in 24-hour format HH:mm
-     * @param messages     The list to append messages in case something goes wrong.
-     * @return a validated and correctly built {@code PicoYPlaca} object or null in case something fails
+     * @return a validated and correctly built {@code PicoYPlaca} object
+     * @throws ConversionException if any input argument is invalid
      */
-    public PicoYPlaca build(String licensePlate, String date, String time, List<String> messages) {
-        DateTimeConverter converter = DateTimeConverter.getINSTANCE();
-        LocalDate localDate = null;
-        List<String> localMessages = new ArrayList<>();
+    public PicoYPlaca build(String licensePlate, String date, String time) throws ConversionException {
         if (!licensePlate.matches(PropertiesLoader.getProperties().getProperty("regex.license.plate"))) {
-            localMessages.add(PropertiesLoader.getProperties().getProperty("message.invalid.license.plate"));
+            throw new ConversionException(PropertiesLoader.getProperties().getProperty("message.invalid.license.plate"));
         }
-        try {
-            localDate = converter.convertToDate(date);
-        } catch (ConversionException e) {
-            localMessages.add(e.getMessage());
-        }
-        LocalTime localTime = null;
-        try {
-            localTime = converter.convertToTime(time);
-        } catch (ConversionException e) {
-            localMessages.add(e.getMessage());
-        }
-        if (localMessages.isEmpty()) {
-            return new PicoYPlaca(licensePlate, localDate, localTime);
+        DateTimeConverter converter = DateTimeConverter.getINSTANCE();
+        LocalDate localDate = converter.convertToDate(date);
+        LocalTime localTime = converter.convertToTime(time);
+        return new PicoYPlaca(licensePlate.toUpperCase(), localDate, localTime);
 
-        }
-        messages.addAll(localMessages);
-        return null;
     }
 
     /**
