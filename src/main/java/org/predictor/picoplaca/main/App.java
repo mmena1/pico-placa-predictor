@@ -1,6 +1,7 @@
 package org.predictor.picoplaca.main;
 
 import org.predictor.picoplaca.builder.PicoYPlacaBuilder;
+import org.predictor.picoplaca.builder.PicoYPlacaMessageBuilder;
 import org.predictor.picoplaca.exception.ConversionException;
 import org.predictor.picoplaca.model.PicoYPlaca;
 import org.predictor.picoplaca.validation.Validators;
@@ -26,10 +27,10 @@ public class App {
                 messages.forEach(System.out::println);
                 return;
             }
-            messages.addAll(Validators.validate(picoYPlaca));
-            messages.forEach(System.out::println);
+            Validators.validate(picoYPlaca);
+            System.out.println(PicoYPlacaMessageBuilder.getINSTANCE().hasPicoYPlaca(picoYPlaca));
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
