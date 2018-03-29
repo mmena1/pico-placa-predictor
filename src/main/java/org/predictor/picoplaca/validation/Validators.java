@@ -22,7 +22,6 @@ public final class Validators {
 
     static {
         validators = new ArrayList<>();
-        validators.add(new LicensePlateValidator());
         validators.add(new DayValidator());
         validators.add(new TimeValidator());
     }
@@ -31,7 +30,7 @@ public final class Validators {
      * Validates whether a license plate number in a {@link PicoYPlaca} object is allowed to circulate on the road at a given date and time
      *
      * @param picoYPlaca The object to be validated
-     * @throws ValidationException if validation fails
+     * @return the list of messages
      */
     public static List<String> validate(PicoYPlaca picoYPlaca) {
         List<String> validatorStatuses = new ArrayList<>();

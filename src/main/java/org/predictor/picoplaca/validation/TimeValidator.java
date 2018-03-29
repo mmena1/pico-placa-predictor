@@ -9,7 +9,7 @@ import org.predictor.picoplaca.util.TimeRestriction;
 import java.time.LocalTime;
 
 /**
- * Implementation of {@link Validator} to validate the time of a {@link PicoYPlaca} object.
+ * Extends from of {@link AbstractValidator} to validate the time of a {@link PicoYPlaca} object.
  *
  * @author martin
  */
@@ -19,7 +19,6 @@ public class TimeValidator extends AbstractValidator {
      * Validates if the time provided in the {@link PicoYPlaca} object is between the restricted time ranges.
      *
      * @param picoYPlaca The object to be validated
-     * @throws ValidationException if validation fails, meaning it does not have pico y placa
      */
     @Override
     public void validate(PicoYPlaca picoYPlaca) {
