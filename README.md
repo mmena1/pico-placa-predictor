@@ -7,7 +7,7 @@ This is a demo project for predicting if a license plate number has pico y placa
 
 ## Instructions
 1. Open a console or terminal windows in the root folder of the project.
-2. Execute: `./gradlew build` (Linux, OSX) or `gradle.bat build` (Windows) to compile and package the sources.
+2. Execute: `./gradlew build` (Linux, OSX) or `gradle.bat build` (Windows) to compile, test and package the sources.
 3. Next, execute the compiled package with the required arguments: 
 ```
 java -jar build/libs/pico-placa-predictor.jar PSD-1231 26/03/2018 08:00
