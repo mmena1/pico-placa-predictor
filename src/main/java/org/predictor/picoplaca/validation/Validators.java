@@ -25,7 +25,7 @@ public final class Validators {
     }
 
     /**
-     * Validates whether a license plate number in a {@link PicoYPlaca} object is allowed to circulate on the road at a given date and time
+     * Executes all validations against a {@link PicoYPlaca} object to determine if the specified license plate number has pico y placa at the given date and time
      *
      * @param picoYPlaca The object to be validated
      * @throws ValidationException in case the validation fails
