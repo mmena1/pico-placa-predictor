@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Factory class that produces a list of validators
+ * Validator class that executes all validations at once
  *
  * @author martin
  */
